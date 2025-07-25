@@ -12,7 +12,9 @@ export function checkForAuthenticationCookie(cookieName){
             const userPayload = validateToken(tokenCookieValue)
             req.user = userPayload
             res.locals.user = userPayload
-        } catch (error) {}
+        } catch (error) {
+            console.error("Invalid or expired auth token:", error.message);
+        }
 
         return next();
     }

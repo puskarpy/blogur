@@ -16,7 +16,7 @@ router.post("/signin", async(req, res)=>{
 
     try {
         const token = await User.matchPasswordAndCreateToken(email, password)        
-        return res.cookie(token).redirect('/')
+        return res.cookie("token",token).redirect('/')
     } catch (error) {
         res.render('signin',{
             error:"Incorrect email or pasword"
@@ -35,5 +35,8 @@ router.post('/signup', async(req, res) => {
     return res.redirect('/')
 })
 
+router.get('/logout',(req,res)=>{
+    return res.clearCookie("token").redirect('/')
+})
 
 export default router;
