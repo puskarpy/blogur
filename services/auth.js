@@ -1,11 +1,13 @@
+import 'dotenv/config'
 import JWT from 'jsonwebtoken'
 
-const secret = "AVeryLongString"
+const secret = process.env.JWT_SECRET
 
 export function createTokenForUser(user){
     const payload = {
         _id:user._id,
         email:user.email,
+        name:user.name,
         profileImageUrl : user.profileImageUrl,
         role:user.role
     }

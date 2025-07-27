@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <%- include('./partials/head') %>
+    <title>Blog</title>
+</head>
+<body class="bg-dark text-light">
+  <%- include('./partials/nav') %>
+
+  <div class="container-lg mt-4">
+    <h2 class="fw-bold mb-4 text-light"><%= blog.title %></h2>
+
+    <img src="<%= blog.coverImageURL %>" class="img-fluid rounded shadow-sm mb-4" alt="blog-picture">
+
+    <p class="mb-5"><%= blog.body %></p>
+
+    <div class="d-flex align-items-center mb-5">
+      <img src="<%= blog.createdBy.profileImageUrl %>" width="50" height="50" class="rounded-circle border border-secondary shadow-sm" alt="Author profile">
+      <span class="ms-3 fw-bold text-light"><%= blog.createdBy.name %></span>
+    </div>
+  </div>
+
+  <div class="container-lg mb-5">
+    <h2 class="mb-4 text-light">Comments (<%= comment.length %>)</h2>
+
+    <% if (locals.user) { %>
+    <form action="/blog/comment/<%= blog._id %>" method="post" class="mb-4">
+      <div class="mb-3">
+        <input type="text" name="content" class="form-control bg-dark text-light border-secondary" placeholder="Enter a comment" required>
+      </div>
+      <button class="btn btn-primary btn-sm" type="submit">Post</button>
+    </form>
+    <% } %>
+
+    <% if (locals.comment) { %>
+    <% comment.forEach(comment => { %>
+    <div class="card bg-dark border-secondary text-light mb-3">
+      <div class="card-header bg-dark border-bottom border-secondary d-flex align-items-center gap-3">
+        <img src="<%= comment.createdBy.profileImageUrl %>" width="40" height="40" class="rounded-circle border border-secondary" alt="Commenter profile">
+        <p class="mb-0 fw-bold text-light"><%= comment.createdBy.name %></p>
+      </div>
+      <div class="card-body">
+        <p class="mb-0"><%= comment.content %></p>
+      </div>
+    </div>
+    <% }) %>
+    <% } %>
+  </div>
+
+  <%- include('./partials/scripts') %>
+</body>
+
+</html>
