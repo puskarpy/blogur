@@ -14,7 +14,7 @@ mongoose.connect(process.env.MONGO_URL)
 )
 
 const app = express()
-const port = process.env.PORT || 8000
+const port = process.env.PORT
 
 //middlewares
 app.set("view engine", "ejs");
@@ -24,10 +24,6 @@ app.use(express.urlencoded({extended : false}))
 app.use(cookieParser())
 app.use(checkForAuthenticationCookie("token"))
 app.use(express.static(path.resolve("./public")))
-// app.use((req, res, next)=>{
-//     res.locals.user = req.user || null;
-//     next()
-// })
 
 //Routers
 app.use('/user', userRouter)
