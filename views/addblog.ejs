@@ -31,8 +31,12 @@
     </div>
       <script>
     tinymce.init({
-      selector: 'textarea#tiny',
-      content_style: 'body { background-color: #1e1e1e; color: #ffffff; }'
+    selector: 'textarea#tiny',
+    plugins: 'lists',
+    toolbar: 'undo redo | formatselect | bold italic | bullist numlist | alignleft aligncenter alignright | outdent indent',
+    skin: 'oxide-dark',
+    content_css: 'dark',
+    content_style: 'body { background-color: #1e1e1e; color: #ffffff; }'
     });
   </script>
     <%- include('./partials/footer')  %>
