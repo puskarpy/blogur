@@ -7,11 +7,8 @@
 <body class="bg-dark text-light">
     <%- include('./partials/nav') %>
     <div class="container mt-4">
-    <form action="/user/signup" method="post">
-  <div class="mb-3">
-    <label for="Name" class="form-label">Enter your name</label>
-    <input type="text" name="name" required class="form-control bg-dark text-light " id="Name" aria-describedby="Name">
-  </div>
+    <p>You must be an admin to continue.</p>
+    <form action="/admin" method="post">
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Email address</label>
     <input type="email" name="email" required class="form-control bg-dark text-light" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -23,8 +20,10 @@
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+    <div class="mt-3">
+        <%= locals.error %>
+    </div>
 </div>
-<%- include('./partials/footer')  %>
     <%- include('./partials/scripts') %>
 </body>
 </html>
