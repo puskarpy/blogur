@@ -2,18 +2,23 @@ import { Router } from "express"
 import { Blog } from "../models/blog.js"
 import { Comment } from "../models/comment.js"
 import path from 'path'
-
+import { v2 as cloudinary } from 'cloudinary';
+import { CloudinaryStorage } from 'multer-storage-cloudinary';
 import multer from "multer"
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, path.resolve(`./public/uploads/`))
-  },
-  filename: function (req, file, cb) {
-    const fileName = `${Date.now()}-${file.originalname}`
-    cb(null, fileName)
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'uploads',
+    allowed_formats: ['jpg', 'png', 'jpeg']
   }
-})
+});
 
 const upload = multer({ storage: storage })
 
@@ -54,7 +59,7 @@ router.post('/', upload.single('coverImage') ,async(req, res) => {
         title:title,
         body:body,
         createdBy:req.user._id,
-        coverImageURL:`/uploads/${req.file.filename}`
+        coverImageURL:req.file.path
     })
     return res.redirect(`/blog/${blog._id}`)
 })
